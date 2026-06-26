@@ -21,190 +21,130 @@ body{font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;font-size:14px;
 .app{display:flex;height:100vh;overflow:hidden}
 
 /* Sidebar */
-.sidebar{width:250px;flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;overflow:hidden}
-.sidebar-header{padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar{width:240px;flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-header{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
 .sidebar-logo{display:flex;align-items:center;gap:8px;color:#fff;font-size:15px;font-weight:600;margin-bottom:2px}
 .sidebar-logo i{font-size:18px;color:var(--accent)}
-.sidebar-sub{font-size:11px;color:rgba(255,255,255,.4);margin-left:26px}
-/* User badge at top */
-.user-badge{margin:10px 12px 4px;background:rgba(255,255,255,.07);border-radius:var(--radius);padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:.15s;border:1px solid rgba(255,255,255,.08)}
-.user-badge:hover{background:rgba(255,255,255,.12)}
-.user-avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
-.user-info{flex:1;min-width:0}
-.user-name{font-size:12px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-role{font-size:10px;color:rgba(255,255,255,.4)}
-.user-badge i.edit-icon{color:rgba(255,255,255,.3);font-size:14px}
-
-.folder-section-label{padding:10px 16px 4px;font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.7px;font-weight:600}
-.folder-list{flex:1;overflow-y:auto;padding:2px 0 4px}
+.sidebar-sub{font-size:11px;color:rgba(255,255,255,.45);margin-left:26px}
+.folder-list{flex:1;overflow-y:auto;padding:8px 0}
 .folder-list::-webkit-scrollbar{width:4px}.folder-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
-.folder-item{display:flex;align-items:center;gap:8px;padding:7px 12px 7px 16px;cursor:pointer;color:rgba(255,255,255,.6);font-size:13px;transition:all .15s;user-select:none;border-radius:0}
-.folder-item:hover{background:rgba(255,255,255,.07);color:#fff}
-.folder-item.active{background:rgba(0,180,216,.14);color:var(--accent)}
-.folder-item i.folder-icon{font-size:15px;flex-shrink:0}
+.folder-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;position:relative;transition:all .15s;user-select:none}
+.folder-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.folder-item.active{background:rgba(0,180,216,.15);colorvar(--accent)}
+.folder-item i.folder-icon{font-size:16px;flex-shrink:0}
 .folder-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.folder-count{font-size:10px;background:rgba(255,255,255,.1);border-radius:10px;padding:1px 7px;flex-shrink:0;transition:.15s}
+.folder-count{font-size:11px;background:rgba(255,255,255,.12);border-radius:10px;padding:1px 7px;flex-shrink:0}
 .folder-item.active .folder-count{background:rgba(0,180,216,.25);color:var(--accent)}
-.folder-actions-wrap{display:none;gap:2px}
-.folder-item:hover .folder-actions-wrap{display:flex}
-.folder-item:hover .folder-count{display:none}
-.folder-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.35);padding:3px 4px;border-radius:4px;font-size:13px;line-height:1;display:flex;align-items:center;transition:.15s}
-.folder-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
-.folder-btn.del:hover{color:#F87171;background:rgba(248,113,113,.1)}
-.folder-add-btn{margin:6px 12px 14px;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px dashed rgba(255,255,255,.18);border-radius:var(--radius);background:none;cursor:pointer;color:rgba(255,255,255,.4);font-size:12px;width:calc(100% - 24px);transition:all .15s;font-family:inherit}
-.folder-add-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,180,216,.07)}
+.folder-edit-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4);padding:2px 4px;border-radius:4px;display:none;font-size:13px;line-height:1}
+.folder-item:hover .folder-edit-btn{display:block}
+.folder-item:hover .folder-edit-btn:hover{color:var(--accent)}
+.folder-add-btn{margin:8px 12px 14px;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px dashed rgba(255,255,255,.2);border-radius:var(--radius);background:none;cursor:pointer;color:rgba(255,255,255,.45);font-size:12px;width:calc(100% - 24px);transition:all .15s;font-family:inherit}
+.folder-add-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,180,216,.08)}
 
 /* Main */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--surface);box-shadow:var(--shadow)}
+.topbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--surface);box-shadow:var(--shadow)}
 .search-wrap{position:relative;flex:1}
-.search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
-.search-wrap input{width:100%;height:36px;padding:0 10px 0 32px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);transition:border .15s}
+.search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.search-wrap input{width:100%;height:36px;padding:0 10px 0 34px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);transition:border .15s}
 .search-wrap input:focus{outline:none;border-color:var(--accent);background:#fff}
-.filter-sel{height:36px;padding:0 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:inherit;background:var(--surface2);color:var(--text);cursor:pointer;min-width:120px}
+.filter-sel{height:36px;padding:0 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);cursor:pointer;min-width:130px}
 .filter-sel:focus{outline:none;border-color:var(--accent)}
 .content-area{flex:1;display:flex;overflow:hidden}
 
 /* SOP List */
-.sop-list-panel{width:300px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:var(--surface)}
-.list-header{padding:9px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2)}
+.sop-list-panel{width:310px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:var(--surface)}
+.list-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2)}
 .list-count{font-size:12px;color:var(--muted)}
-.add-sop-btn{display:flex;align-items:center;gap:5px;padding:6px 11px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;transition:background .15s}
-.add-sop-btn:hover{background:var(--accent2)}
+.import-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;transition:background .15s}
+.import-btn:hover{background:var(--accent2)}
 .sop-items{flex:1;overflow-y:auto}
 .sop-items::-webkit-scrollbar{width:4px}.sop-items::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-.sop-card{padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
+.sop-card{padding:11px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
 .sop-card:hover{background:var(--surface2)}
 .sop-card.active{background:#EFF9FD;border-left:3px solid var(--accent)}
-.sop-title-list{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
-.sop-card.active .sop-title-list{color:var(--accent2)}
-.sop-meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
-.sop-by{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:3px}
-.tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500;white-space:nowrap}
+.sop-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4}
+.sop-card.active .sop-title{color:var(--accent2)}
+.sop-meta{display:flex;gap:5px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
 .tag i{font-size:10px}
 .tag-p{background:var(--tag-problem-bg);color:var(--tag-problem)}
 .tag-f{background:var(--tag-fixture-bg);color:var(--tag-fixture)}
 .tag-c{background:var(--tag-customer-bg);color:var(--tag-customer)}
 .tag-folder{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
 .empty-list{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);gap:10px;padding:30px;text-align:center}
-.empty-list i{font-size:36px;opacity:.2}
+.empty-list i{font-size:36px;opacity:.25}
 .empty-list p{font-size:13px;line-height:1.6}
 
 /* Detail */
 .sop-detail{flex:1;overflow-y:auto;background:var(--bg)}
 .sop-detail::-webkit-scrollbar{width:6px}.sop-detail::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 .detail-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);gap:12px}
-.detail-empty i{font-size:48px;opacity:.18}
+.detail-empty i{font-size:48px;opacity:.2}
 .detail-empty p{font-size:13px}
-.detail-content{padding:24px 28px;max-width:800px}
-.detail-toolbar{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+.detail-content{padding:28px 32px;max-width:760px}
+.detail-toolbar{display:flex;gap:8px;margin-bottom:20px}
 .detail-toolbar button{display:flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;font-size:12px;color:var(--muted);font-family:inherit;transition:all .15s}
 .detail-toolbar button:hover{background:var(--surface2);border-color:var(--border2);color:var(--text)}
 .detail-toolbar button.danger:hover{border-color:#FCA5A5;color:#DC2626;background:#FEF2F2}
-.detail-toolbar button.primary-btn{background:var(--accent);color:#fff;border-color:transparent}
-.detail-toolbar button.primary-btn:hover{background:var(--accent2)}
-.detail-title{font-size:19px;font-weight:600;color:var(--navy);margin-bottom:12px;line-height:1.4}
-.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
-.detail-tags .tag{font-size:12px;padding:4px 11px}
-.meta-info-bar{display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:10px 14px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);flex-wrap:wrap}
-.meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
-.meta-item i{font-size:13px}
-.meta-item strong{color:var(--text);font-weight:500}
-.section{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}
-.section-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.detail-title{font-size:20px;font-weight:600;color:var(--navy);margin-bottom:14px;line-height:1.4}
+.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.detail-tags .tag{font-size:12px;padding:5px 12px}
+.section{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:16px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.section-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
 .section-text{font-size:13px;color:#374151;line-height:1.8}
-.steps-list{display:flex;flex-direction:column;gap:7px}
-.step-item{display:flex;gap:12px;padding:11px 14px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border)}
+.steps-list{display:flex;flex-direction:column;gap:8px}
+.step-item{display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border)}
 .step-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
 .step-text{font-size:13px;color:var(--text);line-height:1.6}
-/* PDF viewer */
-.pdf-embed-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow)}
-.pdf-embed-wrap embed,.pdf-embed-wrap iframe{width:100%;min-height:500px;display:block;border:none}
 
 /* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;z-index:100}
-.modal{background:#fff;border-radius:14px;padding:24px;width:540px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.22)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:100}
+.modal{background:#fff;border-radius:14px;padding:26px;width:520px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 .modal::-webkit-scrollbar{width:4px}.modal::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.modal-header-left{display:flex;align-items:center;gap:8px}
-.modal-header-left i{font-size:20px;color:var(--accent)}
-.modal-header-left h3{font-size:15px;font-weight:600;color:var(--navy)}
-.modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;padding:2px;border-radius:4px;line-height:1}
-.modal-close:hover{color:var(--text);background:var(--surface2)}
-.form-group{margin-bottom:13px}
+.modal-header{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.modal-header i{font-size:20px;color:var(--accent)}
+.modal-header h3{font-size:15px;font-weight:600;color:var(--navy)}
+.form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px}
 .form-group input,.form-group select,.form-group textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;color:var(--text);background:var(--surface2);transition:border .15s}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);background:#fff}
-.form-group textarea{resize:vertical;min-height:68px;line-height:1.6}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.steps-builder{display:flex;flex-direction:column;gap:5px}
+.form-group textarea{resize:vertical;min-height:72px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.steps-builder{display:flex;flex-direction:column;gap:6px}
 .step-row{display:flex;gap:6px;align-items:center}
 .step-row input{flex:1}
 .step-row button{width:30px;height:30px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;color:var(--muted);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-row button:hover{border-color:#FCA5A5;color:#DC2626;background:#FEF2F2}
-.add-step-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1px dashed var(--border2);border-radius:var(--radius);background:none;cursor:pointer;color:var(--muted);font-size:12px;font-family:inherit;transition:all .15s;margin-top:4px}
+.add-step-btn{display:flex;align-items:center;gap:5px;padding:7px 10px;border:1px dashed var(--border2);border-radius:var(--radius);background:none;cursor:pointer;color:var(--muted);font-size:12px;font-family:inherit;transition:all .15s;margin-top:4px}
 .add-step-btn:hover{border-color:var(--accent);color:var(--accent);background:#F0FDFF}
-.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
-.btn-cancel{padding:7px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface2);color:var(--muted);cursor:pointer;font-size:13px;font-family:inherit}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.btn-cancel{padding:8px 18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface2);color:var(--muted);cursor:pointer;font-size:13px;font-family:inherit}
 .btn-cancel:hover{background:var(--surface3)}
-.btn-primary{padding:7px 16px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:background .15s}
+.btn-primary{padding:8px 18px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:background .15s}
 .btn-primary:hover{background:var(--accent2)}
-.btn-danger{padding:7px 16px;border:none;border-radius:var(--radius);background:#DC2626;color:#fff;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
-.btn-danger:hover{background:#B91C1C}
-
-/* Upload areas */
-.upload-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
-.upload-tab{flex:1;padding:8px;border:none;background:var(--surface2);cursor:pointer;font-size:12px;font-family:inherit;color:var(--muted);transition:.15s;display:flex;align-items:center;justify-content:center;gap:5px}
-.upload-tab.active{background:var(--accent);color:#fff}
-.upload-tab:not(.active):hover{background:var(--surface3)}
-.upload-panel{display:none}.upload-panel.active{display:block}
-.upload-area{border:2px dashed var(--border2);border-radius:var(--radius);padding:18px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:6px}
-.upload-area:hover,.upload-area.drag{border-color:var(--accent);background:#F0FDFF}
-.upload-area i{font-size:26px;color:var(--muted);display:block;margin-bottom:5px}
+.upload-area{border:2px dashed var(--border2);border-radius:var(--radius);padding:22px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:8px}
+.upload-area:hover{border-color:var(--accent);background:#F0FDFF}
+.upload-area i{font-size:30px;color:var(--muted);display:block;margin-bottom:6px}
 .upload-area p{font-size:12px;color:var(--muted);line-height:1.6}
-.upload-area.has-file{border-color:var(--accent);background:#F0FDFF}
-.upload-area.has-file i{color:var(--accent)}
-.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted);font-size:11px}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted);font-size:11px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 input[type=file]{display:none}
-
-/* Toast */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:var(--radius);font-size:13px;display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(0,0,0,.22);z-index:300;animation:slideUp .2s ease}
-.toast.success i{color:#4ADE80}
-.toast.error i{color:#F87171}
-@keyframes slideUp{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
-
-/* User modal */
-.user-modal{width:340px}
-.avatar-big{width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;margin:0 auto 14px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.25);z-index:200;animation:slideUp .2s ease}
+@keyframes slideUp{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo"><i class="ti ti-book-2"></i>SOP Manager</div>
       <div class="sidebar-sub">คลังขั้นตอนการแก้ไขปัญหา</div>
     </div>
-
-    <!-- Current user -->
-    <div class="user-badge" onclick="openUserModal()" title="เปลี่ยนชื่อผู้ใช้">
-      <div class="user-avatar" id="sidebarAvatar">?</div>
-      <div class="user-info">
-        <div class="user-name" id="sidebarName">ยังไม่ได้ตั้งชื่อ</div>
-        <div class="user-role">คลิกเพื่อเปลี่ยนชื่อ</div>
-      </div>
-      <i class="ti ti-pencil edit-icon"></i>
-    </div>
-
-    <div class="folder-section-label">โฟลเดอร์</div>
     <div class="folder-list" id="folderList"></div>
     <button class="folder-add-btn" onclick="openFolderModal()"><i class="ti ti-folder-plus"></i>เพิ่มโฟลเดอร์ใหม่</button>
   </div>
 
-  <!-- Main -->
   <div class="main">
     <div class="topbar">
       <div class="search-wrap" style="flex:1">
@@ -218,7 +158,7 @@ input[type=file]{display:none}
       <div class="sop-list-panel">
         <div class="list-header">
           <span class="list-count" id="listCount">0 รายการ</span>
-          <button class="add-sop-btn" onclick="openImportModal()"><i class="ti ti-plus"></i>เพิ่ม SOP</button>
+          <button class="import-btn" onclick="openImportModal()"><i class="ti ti-plus"></i>เพิ่ม / นำเข้า SOP</button>
         </div>
         <div class="sop-items" id="sopItems"></div>
       </div>
@@ -232,568 +172,364 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- User Modal -->
-<div class="modal-bg" id="userModal" style="display:none" onclick="if(event.target===this)closeUserModal()">
-  <div class="modal user-modal">
-    <div class="modal-header">
-      <div class="modal-header-left"><i class="ti ti-user-circle"></i><h3>ตั้งชื่อผู้ใช้งาน</h3></div>
-      <button class="modal-close" onclick="closeUserModal()"><i class="ti ti-x"></i></button>
-    </div>
-    <div class="avatar-big" id="modalAvatar">?</div>
-    <div class="form-group"><label>ชื่อ-นามสกุล หรือชื่อเล่น</label><input id="inputUserName" placeholder="เช่น สมชาย ใจดี" oninput="updateAvatarPreview()" onkeydown="if(event.key==='Enter')saveUser()"></div>
-    <div class="form-group"><label>แผนก / ตำแหน่ง (ไม่บังคับ)</label><input id="inputUserDept" placeholder="เช่น วิศวกรทดสอบ, Line A"></div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeUserModal()">ยกเลิก</button>
-      <button class="btn-primary" onclick="saveUser()">บันทึก</button>
-    </div>
-  </div>
-</div>
-
-<!-- Folder Modal -->
 <div class="modal-bg" id="folderModal" style="display:none" onclick="if(event.target===this)closeFolderModal()">
-  <div class="modal" style="width:380px">
-    <div class="modal-header">
-      <div class="modal-header-left"><i class="ti ti-folder-plus"></i><h3 id="folderModalTitle">สร้างโฟลเดอร์ใหม่</h3></div>
-      <button class="modal-close" onclick="closeFolderModal()"><i class="ti ti-x"></i></button>
-    </div>
-    <div class="form-group"><label>ชื่อโฟลเดอร์</label><input id="folderNameInput" placeholder="เช่น Line A, ลูกค้า Toyota" onkeydown="if(event.key==='Enter')saveFolder()"></div>
+  <div class="modal">
+    <div class="modal-header"><i class="ti ti-folder-plus"></i><h3>สร้างโฟลเดอร์ใหม่</h3></div>
+    <div class="form-group"><label>ชื่อโฟลเดอร์</label><input id="newFolderName" placeholder="เช่น Line A, Product X, ลูกค้า Toyota" onkeydown="if(event.key==='Enter')addFolder()"></div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeFolderModal()">ยกเลิก</button>
-      <button class="btn-primary" onclick="saveFolder()" id="folderSaveBtn">สร้างโฟลเดอร์</button>
+      <button class="btn-primary" onclick="addFolder()">สร้างโฟลเดอร์</button>
     </div>
   </div>
 </div>
 
-<!-- Confirm Delete Folder Modal -->
-<div class="modal-bg" id="delFolderModal" style="display:none">
-  <div class="modal" style="width:380px">
-    <div class="modal-header">
-      <div class="modal-header-left"><i class="ti ti-trash" style="color:#DC2626"></i><h3>ยืนยันการลบโฟลเดอร์</h3></div>
+<div class="modal-bg" id="folderSettingsModal" style="display:none" onclick="if(event.target===this)closeFolderSettingsModal()">
+  <div class="modal">
+    <div class="modal-header"><i class="ti ti-settings"></i><h3>ตั้งค่าการจัดการโฟลเดอร์</h3></div>
+    <div class="form-group">
+      <label>ชื่อโฟลเดอร์</label>
+      <input id="editFolderName" placeholder="ระบุชื่อโฟลเดอร์">
     </div>
-    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px">ลบโฟลเดอร์ "<strong id="delFolderName"></strong>" ?<br>SOP ที่อยู่ในโฟลเดอร์นี้จะยังคงอยู่ในระบบ (ไม่มีโฟลเดอร์)</p>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="document.getElementById('delFolderModal').style.display='none'">ยกเลิก</button>
-      <button class="btn-danger" onclick="confirmDeleteFolder()">ลบโฟลเดอร์</button>
+    <div class="form-group">
+      <label>ไอคอนสัญลักษณ์</label>
+      <select id="editFolderIcon" style="width: 100%;">
+        <option value="ti-folder">📁 โฟลเดอร์มาตรฐาน (Default)</option>
+        <option value="ti-device-cpu">💻 ไลน์การผลิต / ICT / FCT</option>
+        <option value="ti-tool">🔧 ซ่อมบำรุง / เครื่องมือ / Fixture</option>
+        <option value="ti-building">🏢 คลังสินค้า / ลูกค้า (Customer)</option>
+        <option value="ti-user">👤 แผนก / ผู้รับผิดชอบ</option>
+        <option value="ti-alert-triangle">⚠️ เคสเร่งด่วน / งานเคลม</option>
+      </select>
+    </div>
+    <div class="modal-footer" style="justify-content: space-between;">
+      <button class="btn-cancel" style="border-color:#FCA5A5; color:#DC2626; background:#FEF2F2" onclick="deleteFolderFromSettings()">
+        <i class="ti ti-trash" style="margin-right: 4px;"></i>ลบโฟลเดอร์
+      </button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-cancel" onclick="closeFolderSettingsModal()">ยกเลิก</button>
+        <button class="btn-primary" onclick="saveFolderSettings()"><i class="ti ti-device-floppy" style="margin-right: 4px;"></i>บันทึก</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Add/Edit SOP Modal -->
 <div class="modal-bg" id="importModal" style="display:none" onclick="if(event.target===this)closeImportModal()">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-header-left"><i class="ti ti-file-plus" id="sopModalIcon"></i><h3 id="sopModalTitle">เพิ่ม SOP ใหม่</h3></div>
-      <button class="modal-close" onclick="closeImportModal()"><i class="ti ti-x"></i></button>
+    <div class="modal-header"><i class="ti ti-upload"></i><h3>เพิ่ม / นำเข้า SOP</h3></div>
+    <div class="form-group">
+      <label>โฟลเดอร์ปลายทาง</label>
+      <select id="importFolder"></select>
     </div>
-
-    <!-- Import tabs -->
-    <div class="upload-tabs" id="sopTabs">
-      <button class="upload-tab active" onclick="switchTab('manual')" id="tabManual"><i class="ti ti-pencil"></i>กรอกด้วยตนเอง</button>
-      <button class="upload-tab" onclick="switchTab('json')" id="tabJson"><i class="ti ti-file-code"></i>Import JSON</button>
-      <button class="upload-tab" onclick="switchTab('pdf')" id="tabPdf"><i class="ti ti-file-type-pdf"></i>แนบไฟล์ PDF</button>
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+      <i class="ti ti-file-upload"></i>
+      <p><strong>คลิกเพื่อ Import ไฟล์ JSON</strong><br>รองรับไฟล์ที่ Export จากระบบนี้</p>
     </div>
-
-    <!-- Manual panel -->
-    <div class="upload-panel active" id="panelManual">
-      <div class="form-group"><label>โฟลเดอร์</label><select id="importFolder"></select></div>
-      <div class="form-group"><label>ชื่อ SOP / ชื่อปัญหา <span style="color:#EF4444">*</span></label><input id="sopTitle" placeholder="เช่น สัญญาณ PASS ไม่ขึ้นหลังวัดค่า Resistance"></div>
-      <div class="form-grid">
-        <div class="form-group"><label>เครื่อง Fixture</label><input id="sopFixture" placeholder="เช่น ICT-01, FCT-03"></div>
-        <div class="form-group"><label>ลูกค้า</label><input id="sopCustomer" placeholder="เช่น Toyota, Bosch"></div>
-      </div>
-      <div class="form-group"><label>อาการ / สาเหตุที่เป็นไปได้</label><textarea id="sopDesc" placeholder="อธิบายอาการที่พบ"></textarea></div>
-      <div class="form-group">
-        <label>ขั้นตอนการแก้ไข</label>
-        <div class="steps-builder" id="stepsInput">
-          <div class="step-row"><input placeholder="ขั้นตอนที่ 1..."><button onclick="removeStep(this)"><i class="ti ti-x"></i></button></div>
-        </div>
-        <button class="add-step-btn" onclick="addStepInput()"><i class="ti ti-plus"></i>เพิ่มขั้นตอน</button>
-      </div>
+    <input type="file" id="fileInput" accept=".json" onchange="handleFileImport(event)">
+    <div class="divider">หรือกรอกข้อมูลด้วยตนเอง</div>
+    <div class="form-group"><label>ชื่อ SOP / ปัญหา <span style="color:#EF4444">*</span></label><input id="sopTitle" placeholder="เช่น สัญญาณ PASS ไม่ขึ้นหลังวัดค่า Resistance"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>เครื่อง Fixture</label><input id="sopFixture" placeholder="เช่น ICT-01, FCT-03"></div>
+      <div class="form-group"><label>ลูกค้า</label><input id="sopCustomer" placeholder="เช่น Toyota, Bosch"></div>
     </div>
-
-    <!-- JSON panel -->
-    <div class="upload-panel" id="panelJson">
-      <div class="form-group"><label>โฟลเดอร์ปลายทาง</label><select id="importFolderJson"></select></div>
-      <div class="upload-area" id="jsonDropZone" onclick="document.getElementById('fileInputJson').click()" ondragover="dragOver(event,'jsonDropZone')" ondragleave="dragLeave('jsonDropZone')" ondrop="dropFile(event,'json')">
-        <i class="ti ti-file-upload"></i>
-        <p id="jsonFileLabel"><strong>คลิกหรือลากไฟล์มาวาง</strong><br>รองรับ .json ที่ Export จากระบบนี้</p>
+    <div class="form-group"><label>อาการ / สาเหตุที่เป็นไปได้</label><textarea id="sopDesc" placeholder="อธิบายอาการที่พบ หรือสาเหตุที่เป็นไปได้"></textarea></div>
+    <div class="form-group">
+      <label>ขั้นตอนการแก้ไข</label>
+      <div class="steps-builder" id="stepsInput">
+        <div class="step-row"><input placeholder="ขั้นตอนที่ 1..."><button onclick="removeStep(this)" title="ลบ"><i class="ti ti-x"></i></button></div>
       </div>
-      <input type="file" id="fileInputJson" accept=".json" onchange="handleJsonImport(event)">
-      <p style="font-size:11px;color:var(--muted);line-height:1.6">รูปแบบ JSON: array ของ object ที่มี field: title, problem, fixture, customer, desc, steps[]</p>
+      <button class="add-step-btn" onclick="addStepInput()"><i class="ti ti-plus"></i>เพิ่มขั้นตอน</button>
     </div>
-
-    <!-- PDF panel -->
-    <div class="upload-panel" id="panelPdf">
-      <div class="form-group"><label>โฟลเดอร์ปลายทาง</label><select id="importFolderPdf"></select></div>
-      <div class="form-group"><label>ชื่อ SOP <span style="color:#EF4444">*</span></label><input id="sopTitlePdf" placeholder="ชื่อเรื่องของ SOP นี้"></div>
-      <div class="form-grid">
-        <div class="form-group"><label>เครื่อง Fixture</label><input id="sopFixturePdf" placeholder="เช่น ICT-01"></div>
-        <div class="form-group"><label>ลูกค้า</label><input id="sopCustomerPdf" placeholder="เช่น Toyota"></div>
-      </div>
-      <div class="upload-area" id="pdfDropZone" onclick="document.getElementById('fileInputPdf').click()" ondragover="dragOver(event,'pdfDropZone')" ondragleave="dragLeave('pdfDropZone')" ondrop="dropFile(event,'pdf')">
-        <i class="ti ti-file-type-pdf" id="pdfDropIcon"></i>
-        <p id="pdfFileLabel"><strong>คลิกหรือลากไฟล์ PDF มาวาง</strong><br>ไฟล์จะถูกฝังและแสดงในหน้ารายละเอียด SOP</p>
-      </div>
-      <input type="file" id="fileInputPdf" accept=".pdf" onchange="handlePdfSelect(event)">
-    </div>
-
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeImportModal()">ยกเลิก</button>
-      <button class="btn-primary" onclick="saveSOP()" id="sopSaveBtn"><i class="ti ti-device-floppy" style="margin-right:4px"></i>บันทึก SOP</button>
+      <button class="btn-primary" onclick="saveManualSOP()"><i class="ti ti-device-floppy" style="margin-right:4px"></i>บันทึก SOP</button>
     </div>
   </div>
 </div>
 
 <script>
-const STORE_KEY = 'sop_mgr_v3';
-let pendingDeleteFolderId = null;
-let editingFolderId = null;
-let editingSopId = null;
-let pendingPdfData = null;
-let currentTab = 'manual';
-
+const STORE_KEY = 'sop_manager_v2';
 let store = {
   folders: [
-    {id:'f1', name:'Line A - ICT'},
-    {id:'f2', name:'Line B - FCT'},
-    {id:'f3', name:'ลูกค้า Toyota'},
+    {id:'f1', name:'Line A - ICT', icon:'ti-device-cpu'},
+    {id:'f2', name:'Line B - FCT', icon:'ti-device-cpu'},
+    {id:'f3', name:'ลูกค้า Toyota', icon:'ti-building'},
   ],
   sops: [
-    {id:'s1',folderId:'f1',title:'สัญญาณ PASS ไม่ขึ้นหลังวัดค่า Resistance',fixture:'ICT-01',customer:'Toyota',desc:'พบปัญหา Board ผ่านการทดสอบแต่สัญญาณ PASS ไม่แสดงผล อาจเกิดจาก relay หรือ contact probe สกปรก',steps:['ปิดเครื่อง ICT-01 และถอดปลั๊ก','ตรวจสอบ Contact Probe บน Fixture ว่าสกปรกหรือไม่','ทำความสะอาด Probe ด้วย IPA และแปรงขนอ่อน','ตรวจสอบ Relay ในส่วน Signal Output','เปิดเครื่องและทดสอบซ้ำ 3 ครั้ง'],addedBy:'ตัวอย่างข้อมูล',addedAt:'2025-06-01T08:00:00'},
-    {id:'s2',folderId:'f1',title:'ค่า Resistance อ่านได้สูงผิดปกติ',fixture:'ICT-01',customer:'Toyota',desc:'Resistance อ่านได้สูงกว่า Spec ทั้งที่ Board ไม่มีปัญหา อาจเกิดจาก Probe wear หรือ Ground ไม่ดี',steps:['ตรวจสอบ Kelvin Probe ว่าสึกหรอ','วัด Contact Resistance ของ Probe แต่ละตัว','เปลี่ยน Probe ที่มีค่า > 0.1Ω','ตรวจสอบ Guard และ Ground','Calibrate เครื่องใหม่'],addedBy:'ตัวอย่างข้อมูล',addedAt:'2025-06-02T09:00:00'},
-    {id:'s3',folderId:'f2',title:'FCT ล้มเหลวที่ Power Supply Test',fixture:'FCT-03',customer:'Bosch',desc:'Board ล้มเหลวในขั้นตอน Power Supply Test ทั้งที่ Component ครบ',steps:['ตรวจสอบ Test Sequence','วัด Voltage ที่ TP1-TP4','ตรวจ Load Bank','ตรวจสอบ DUT Connector','Run Diagnostic Mode'],addedBy:'ตัวอย่างข้อมูล',addedAt:'2025-06-03T10:00:00'},
-    {id:'s4',folderId:'f3',title:'Barcode Scanner ไม่อ่าน Label',fixture:'SCAN-01',customer:'Toyota',desc:'Scanner ไม่สามารถอ่าน Barcode บน Label ได้',steps:['ตรวจสอบคุณภาพ Barcode ด้วย Verifier','Cleaning หัวอ่าน Scanner','ปรับ Focus และ Gain','ทดสอบกับ Label ใหม่','แจ้ง Vendor หากยังไม่ได้ผล'],addedBy:'ตัวอย่างข้อมูล',addedAt:'2025-06-04T11:00:00'},
+    {id:'s1',folderId:'f1',title:'สัญญาณ PASS ไม่ขึ้นหลังวัดค่า Resistance',problem:'PASS ไม่ขึ้น',fixture:'ICT-01',customer:'Toyota',desc:'พบปัญหา Board ผ่านการทดสอบแต่สัญญาณ PASS ไม่แสดงผล อาจเกิดจาก relay หรือ contact probe สกปรก',steps:['ปิดเครื่อง ICT-01 และถอดปลั๊ก','ตรวจสอบ Contact Probe บน Fixture ว่าสกปรกหรือไม่','ทำความสะอาด Probe ด้วย IPA และแปรงขนอ่อน','ตรวจสอบ Relay ในส่วน Signal Output ว่าทำงานปกติ','เปิดเครื่องและทดสอบซ้ำ 3 ครั้งเพื่อยืนยัน']},
+    {id:'s2',folderId:'f1',title:'ค่า Resistance อ่านได้สูงผิดปกติ',problem:'Resistance ผิดพลาด',fixture:'ICT-01',customer:'Toyota',desc:'Resistance อ่านได้สูงกว่า Spec ทั้งที่ Board ไม่มีปัญหา อาจเกิดจาก Probe wear หรือ Ground ไม่ดี',steps:['ตรวจสอบ Kelvin Probe ว่าสึกหรอหรือไม่','วัด Contact Resistance ของ Probe แต่ละตัว','เปลี่ยน Probe ที่มีค่า Contact Resistance > 0.1Ω','ตรวจสอบ Guard และ Ground Connection','Calibrate เครื่องใหม่ตาม Procedure']},
+    {id:'s3',folderId:'f2',title:'FCT ล้มเหลวที่ Power Supply Test',problem:'Power Supply Test Fail',fixture:'FCT-03',customer:'Bosch',desc:'Board ล้มเหลวในขั้นตอน Power Supply Test ทั้งที่ Component ครบ',steps:['ตรวจสอบ Test Sequence ใน Program','วัด Voltage ที่จุด TP1-TP4 ด้วย Oscilloscope','ตรวจ Load Bank ว่ามีค่าตรงกับ Spec หรือไม่','ตรวจสอบ DUT Connector ว่า Contact ดีหรือไม่','Run Diagnostic Mode และบันทึก Log']},
+    {id:'s4',folderId:'f3',title:'Barcode Scanner ไม่อ่าน Label',problem:'Barcode อ่านไม่ได้',fixture:'SCAN-01',customer:'Toyota',desc:'Scanner ไม่สามารถอ่าน Barcode บน Label ได้ อาจเกิดจาก Print Quality หรือ Scanner ชำรุด',steps:['ตรวจสอบคุณภาพการพิมพ์ Barcode ด้วย Verifier','Cleaning หัวอ่าน Scanner ด้วย Lens Cleaner','ปรับ Focus และ Gain ของ Scanner','ทดสอบกับ Label ใหม่ที่รู้ว่า OK','หากยังไม่ได้ผล แจ้ง Vendor เพื่อ Calibrate']},
   ],
   activeFolder: null,
-  activeSOP: null,
-  currentUser: {name:'', dept:''}
+  activeSOP: null
 };
 
-// ─── Persist ───
-function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify({folders:store.folders,sops:store.sops,currentUser:store.currentUser}))}catch(e){}}
-function load(){
-  try{
-    const d=localStorage.getItem(STORE_KEY);
-    if(d){const p=JSON.parse(d);store.folders=p.folders||store.folders;store.sops=p.sops||store.sops;store.currentUser=p.currentUser||{name:'',dept:''}}
-  }catch(e){}
+let currentEditingFolderId = null;
+
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({folders:store.folders,sops:store.sops})); } catch(e){}
+}
+function load() {
+  try {
+    const d = localStorage.getItem(STORE_KEY);
+    if (d) { const p = JSON.parse(d); store.folders = p.folders||store.folders; store.sops = p.sops||store.sops; }
+  } catch(e){}
 }
 
-// ─── Toast ───
-function toast(msg,type='success'){
-  const icons={success:'ti-check',error:'ti-alert-circle',info:'ti-info-circle'};
-  const t=document.createElement('div');
-  t.className=`toast ${type}`;
-  t.innerHTML=`<i class="ti ${icons[type]||'ti-check'}"></i>${msg}`;
+function toast(msg, icon='ti-check') {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<i class="ti ${icon}"></i>${msg}`;
   document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2800);
+  setTimeout(()=>t.remove(), 2800);
 }
 
-// ─── User ───
-function initUser(){
-  const u=store.currentUser;
-  const init=u.name?u.name.charAt(0).toUpperCase():'?';
-  document.getElementById('sidebarAvatar').textContent=init;
-  document.getElementById('sidebarName').textContent=u.name||'ยังไม่ได้ตั้งชื่อ';
-}
-function openUserModal(){
-  document.getElementById('inputUserName').value=store.currentUser.name||'';
-  document.getElementById('inputUserDept').value=store.currentUser.dept||'';
-  updateAvatarPreview();
-  document.getElementById('userModal').style.display='flex';
-  setTimeout(()=>document.getElementById('inputUserName').focus(),50);
-}
-function closeUserModal(){document.getElementById('userModal').style.display='none'}
-function updateAvatarPreview(){
-  const v=document.getElementById('inputUserName').value.trim();
-  document.getElementById('modalAvatar').textContent=v?v.charAt(0).toUpperCase():'?';
-}
-function saveUser(){
-  const name=document.getElementById('inputUserName').value.trim();
-  if(!name){toast('กรุณาใส่ชื่อ','error');return;}
-  store.currentUser={name,dept:document.getElementById('inputUserDept').value.trim()};
-  initUser();closeUserModal();save();toast('บันทึกชื่อผู้ใช้เรียบร้อย');
-}
-
-// ─── Folders ───
-function renderFolders(){
-  const el=document.getElementById('folderList');
-  const all={id:null,name:'ทั้งหมด',icon:'ti-layout-list'};
-  const items=[all,...store.folders];
-  el.innerHTML=items.map(f=>{
-    const cnt=f.id?store.sops.filter(s=>s.folderId===f.id).length:store.sops.length;
-    const active=store.activeFolder===f.id;
-    return `<div class="folder-item${active?' active':''}" onclick="selectFolder('${f.id}')">
+function renderFolders() {
+  const el = document.getElementById('folderList');
+  const items = [{id:null, name:'ทั้งหมด', icon:'ti-layout-list'}, ...store.folders];
+  el.innerHTML = items.map(f => {
+    const cnt = f.id ? store.sops.filter(s=>s.folderId===f.id).length : store.sops.length;
+    const isActive = store.activeFolder === f.id;
+    return `<div class="folder-item${isActive?' active':''}" onclick="selectFolder('${f.id}')">
       <i class="ti ${f.icon||'ti-folder'} folder-icon"></i>
       <span class="folder-name">${f.name}</span>
       <span class="folder-count">${cnt}</span>
-      ${f.id?`<div class="folder-actions-wrap" onclick="event.stopPropagation()">
-        <button class="folder-btn" onclick="openEditFolder('${f.id}')" title="แก้ไขชื่อ"><i class="ti ti-pencil"></i></button>
-        <button class="folder-btn del" onclick="openDelFolder('${f.id}')" title="ลบ"><i class="ti ti-trash"></i></button>
-      </div>`:''}
+      ${f.id ? `<button class="folder-edit-btn" onclick="event.stopPropagation();openFolderSettingsModal('${f.id}')" title="ตั้งค่าโฟลเดอร์"><i class="ti ti-settings"></i></button>` : ''}
     </div>`;
   }).join('');
 }
-function selectFolder(id){
-  store.activeFolder=(id==='null'||id===null)?null:id;
-  store.activeSOP=null;
-  document.getElementById('sopDetail').innerHTML=`<div class="detail-empty"><i class="ti ti-file-description"></i><p>เลือก SOP เพื่อดูรายละเอียด</p></div>`;
-  renderFolders();filterSOPs();
+
+function selectFolder(id) {
+  store.activeFolder = (id === 'null' || id === null) ? null : id;
+  store.activeSOP = null;
+  document.getElementById('sopDetail').innerHTML = `<div class="detail-empty"><i class="ti ti-file-description"></i><p>เลือก SOP เพื่อดูรายละเอียด</p></div>`;
+  renderFolders(); filterSOPs();
 }
 
-function openFolderModal(){
-  editingFolderId=null;
-  document.getElementById('folderModalTitle').textContent='สร้างโฟลเดอร์ใหม่';
-  document.getElementById('folderSaveBtn').textContent='สร้างโฟลเดอร์';
-  document.getElementById('folderNameInput').value='';
-  document.getElementById('folderModal').style.display='flex';
-  setTimeout(()=>document.getElementById('folderNameInput').focus(),50);
-}
-function openEditFolder(id){
-  editingFolderId=id;
-  const f=store.folders.find(x=>x.id===id);
-  document.getElementById('folderModalTitle').textContent='แก้ไขชื่อโฟลเดอร์';
-  document.getElementById('folderSaveBtn').textContent='บันทึก';
-  document.getElementById('folderNameInput').value=f?f.name:'';
-  document.getElementById('folderModal').style.display='flex';
-  setTimeout(()=>document.getElementById('folderNameInput').focus(),50);
-}
-function closeFolderModal(){document.getElementById('folderModal').style.display='none';editingFolderId=null;}
-function saveFolder(){
-  const name=document.getElementById('folderNameInput').value.trim();
-  if(!name)return;
-  if(editingFolderId){
-    const f=store.folders.find(x=>x.id===editingFolderId);
-    if(f)f.name=name;
-    toast('แก้ไขชื่อโฟลเดอร์เรียบร้อย');
-  } else {
-    store.folders.push({id:'f'+Date.now(),name});
-    toast('สร้างโฟลเดอร์เรียบร้อย');
-  }
-  closeFolderModal();renderFolders();filterSOPs();save();
-}
-function openDelFolder(id){
-  pendingDeleteFolderId=id;
-  const f=store.folders.find(x=>x.id===id);
-  document.getElementById('delFolderName').textContent=f?f.name:'';
-  document.getElementById('delFolderModal').style.display='flex';
-}
-function confirmDeleteFolder(){
-  const id=pendingDeleteFolderId;
-  store.folders=store.folders.filter(f=>f.id!==id);
-  store.sops.forEach(s=>{if(s.folderId===id)s.folderId=null;});
-  if(store.activeFolder===id)store.activeFolder=null;
-  document.getElementById('delFolderModal').style.display='none';
-  pendingDeleteFolderId=null;
-  renderFolders();filterSOPs();save();toast('ลบโฟลเดอร์เรียบร้อย');
-}
-
-// ─── Filter / Render SOPs ───
-function getFiltered(){
-  const q=(document.getElementById('searchInput').value||'').toLowerCase();
-  const fc=document.getElementById('filterCustomer').value;
-  const ff=document.getElementById('filterFixture').value;
-  return store.sops.filter(s=>{
-    if(store.activeFolder&&s.folderId!==store.activeFolder)return false;
-    if(fc&&s.customer!==fc)return false;
-    if(ff&&s.fixture!==ff)return false;
-    if(q){
-      const hay=[s.title,s.fixture,s.customer,s.desc,...(s.steps||[])].join(' ').toLowerCase();
-      if(!hay.includes(q))return false;
-    }
+function getFiltered() {
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  const fc = document.getElementById('filterCustomer').value;
+  const ff = document.getElementById('filterFixture').value;
+  return store.sops.filter(s => {
+    if (store.activeFolder && s.folderId !== store.activeFolder) return false;
+    if (fc && s.customer !== fc) return false;
+    if (ff && s.fixture !== ff) return false;
+    if (q && !([s.title,s.problem,s.fixture,s.customer,s.desc,...(s.steps||[])].join(' ').toLowerCase().includes(q))) return false;
     return true;
   });
 }
-function filterSOPs(){
-  const filtered=getFiltered();
-  document.getElementById('listCount').textContent=`${filtered.length} รายการ`;
-  const el=document.getElementById('sopItems');
-  if(!filtered.length){
-    el.innerHTML=`<div class="empty-list"><i class="ti ti-search-off"></i><p>ไม่พบ SOP ที่ตรงกับเงื่อนไข</p></div>`;
+
+function filterSOPs() {
+  const filtered = getFiltered();
+  document.getElementById('listCount').textContent = `${filtered.length} รายการ`;
+  const el = document.getElementById('sopItems');
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty-list"><i class="ti ti-search-off"></i><p>ไม่พบ SOP ที่ตรงกับเงื่อนไข<br>ลองเปลี่ยนคำค้นหาหรือตัวกรอง</p></div>`;
     return;
   }
-  el.innerHTML=filtered.map(s=>`<div class="sop-card${store.activeSOP===s.id?' active':''}" onclick="showSOP('${s.id}')">
-    <div class="sop-title-list">${hl(s.title)}</div>
+  el.innerHTML = filtered.map(s => `<div class="sop-card${store.activeSOP===s.id?' active':''}" onclick="showSOP('${s.id}')">
+    <div class="sop-title">${hl(s.title)}</div>
     <div class="sop-meta">
+      ${s.problem?`<span class="tag tag-p"><i class="ti ti-alert-circle"></i>${hl(s.problem)}</span>`:''}
       ${s.fixture?`<span class="tag tag-f"><i class="ti ti-tool"></i>${hl(s.fixture)}</span>`:''}
       ${s.customer?`<span class="tag tag-c"><i class="ti ti-building"></i>${hl(s.customer)}</span>`:''}
     </div>
-    ${s.addedBy?`<div class="sop-by"><i class="ti ti-user" style="font-size:10px"></i>${s.addedBy} · ${fmtDate(s.addedAt)}</div>`:''}
   </div>`).join('');
   updateDropdowns();
 }
-function hl(text){
-  const q=document.getElementById('searchInput').value.trim();
-  if(!q||!text)return text||'';
-  return (text+'').replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),'<mark style="background:#FEF08A;padding:0 1px;border-radius:2px">$1</mark>');
-}
-function fmtDate(iso){
-  if(!iso)return '';
-  try{const d=new Date(iso);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;}catch(e){return ''}
-}
-function updateDropdowns(){
-  const customers=[...new Set(store.sops.map(s=>s.customer).filter(Boolean))].sort();
-  const fixtures=[...new Set(store.sops.map(s=>s.fixture).filter(Boolean))].sort();
-  const fc=document.getElementById('filterCustomer'),ff=document.getElementById('filterFixture');
-  const cv=fc.value,fv=ff.value;
-  fc.innerHTML=`<option value="">ลูกค้าทั้งหมด</option>${customers.map(c=>`<option${cv===c?' selected':''}>${c}</option>`).join('')}`;
-  ff.innerHTML=`<option value="">Fixture ทั้งหมด</option>${fixtures.map(f=>`<option${fv===f?' selected':''}>${f}</option>`).join('')}`;
+
+function hl(text) {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q || !text) return text||'';
+  return (text+'').replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark style="background:#FEF08A;padding:0 1px;border-radius:2px">$1</mark>');
 }
 
-// ─── Show Detail ───
-function showSOP(id){
-  store.activeSOP=id;
-  const s=store.sops.find(x=>x.id===id);
-  if(!s)return;
-  const folder=store.folders.find(f=>f.id===s.folderId);
-  let pdfHtml='';
-  if(s.pdfData){
-    pdfHtml=`<div class="section"><div class="section-label"><i class="ti ti-file-type-pdf" style="margin-right:4px"></i>เอกสาร PDF แนบ</div>
-      <div class="pdf-embed-wrap"><embed src="${s.pdfData}" type="application/pdf" width="100%" height="540px"></div>
-      <button onclick="downloadPdf('${id}')" style="margin-top:8px;display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;font-size:12px;color:var(--muted);font-family:inherit"><i class="ti ti-download"></i>ดาวน์โหลด PDF</button>
-    </div>`;
-  }
-  document.getElementById('sopDetail').innerHTML=`<div class="detail-content">
+function updateDropdowns() {
+  const customers = [...new Set(store.sops.map(s=>s.customer).filter(Boolean))].sort();
+  const fixtures = [...new Set(store.sops.map(s=>s.fixture).filter(Boolean))].sort();
+  const fc = document.getElementById('filterCustomer');
+  const ff = document.getElementById('filterFixture');
+  const cv = fc.value, fv = ff.value;
+  fc.innerHTML = `<option value="">ลูกค้าทั้งหมด</option>${customers.map(c=>`<option${cv===c?' selected':''}>${c}</option>`).join('')}`;
+  ff.innerHTML = `<option value="">Fixture ทั้งหมด</option>${fixtures.map(f=>`<option${fv===f?' selected':''}>${f}</option>`).join('')}`;
+}
+
+function showSOP(id) {
+  store.activeSOP = id;
+  const s = store.sops.find(x=>x.id===id);
+  if (!s) return;
+  const folder = store.folders.find(f=>f.id===s.folderId);
+  document.getElementById('sopDetail').innerHTML = `<div class="detail-content">
     <div class="detail-toolbar">
-      <button class="danger" onclick="deleteSOP('${s.id}')"><i class="ti ti-trash"></i>ลบ</button>
-      <button onclick="openEditSOP('${s.id}')"><i class="ti ti-pencil"></i>แก้ไข</button>
+      <button class="danger" onclick="deleteSOP('${s.id}')"><i class="ti ti-trash"></i>ลบ SOP</button>
       <button onclick="exportSingle('${s.id}')"><i class="ti ti-download"></i>Export JSON</button>
-      <button onclick="exportAll()" style="margin-left:auto"><i class="ti ti-file-export"></i>Export ทั้งหมด</button>
+      <button onclick="exportAll()"><i class="ti ti-file-export"></i>Export ทั้งหมด</button>
     </div>
     <div class="detail-title">${s.title}</div>
     <div class="detail-tags">
-      ${s.fixture?`<span class="tag tag-f" style="font-size:12px;padding:4px 11px"><i class="ti ti-tool"></i>Fixture: ${s.fixture}</span>`:''}
-      ${s.customer?`<span class="tag tag-c" style="font-size:12px;padding:4px 11px"><i class="ti ti-building"></i>ลูกค้า: ${s.customer}</span>`:''}
-      ${folder?`<span class="tag tag-folder" style="font-size:12px;padding:4px 11px"><i class="ti ti-folder"></i>${folder.name}</span>`:''}
-    </div>
-    <div class="meta-info-bar">
-      ${s.addedBy?`<div class="meta-item"><i class="ti ti-user-check"></i>เพิ่มโดย: <strong>${s.addedBy}</strong></div>`:''}
-      ${s.addedAt?`<div class="meta-item"><i class="ti ti-calendar"></i>วันที่: <strong>${fmtDate(s.addedAt)}</strong></div>`:''}
-      ${s.updatedBy?`<div class="meta-item"><i class="ti ti-edit"></i>แก้ไขล่าสุด: <strong>${s.updatedBy}</strong> (${fmtDate(s.updatedAt)})</div>`:''}
+      ${s.problem?`<span class="tag tag-p" style="font-size:12px;padding:5px 12px"><i class="ti ti-alert-circle"></i>ปัญหา: ${s.problem}</span>`:''}
+      ${s.fixture?`<span class="tag tag-f" style="font-size:12px;padding:5px 12px"><i class="ti ti-tool"></i>Fixture: ${s.fixture}</span>`:''}
+      ${s.customer?`<span class="tag tag-c" style="font-size:12px;padding:5px 12px"><i class="ti ti-building"></i>ลูกค้า: ${s.customer}</span>`:''}
+      ${folder?`<span class="tag tag-folder" style="font-size:12px;padding:5px 12px"><i class="ti ti-folder"></i>${folder.name}</span>`:''}
     </div>
     ${s.desc?`<div class="section"><div class="section-label">อาการ / สาเหตุ</div><div class="section-text">${s.desc}</div></div>`:''}
     ${s.steps&&s.steps.length?`<div class="section"><div class="section-label">ขั้นตอนการแก้ไข (${s.steps.length} ขั้นตอน)</div><div class="steps-list">${s.steps.map((st,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><div class="step-text">${st}</div></div>`).join('')}</div></div>`:''}
-    ${pdfHtml}
   </div>`;
   filterSOPs();
 }
 
-function downloadPdf(id){
-  const s=store.sops.find(x=>x.id===id);
-  if(!s||!s.pdfData)return;
-  const a=document.createElement('a');
-  a.href=s.pdfData;
-  a.download=`${s.title||'sop'}.pdf`;
+function deleteSOP(id) {
+  if (!confirm('ยืนยันการลบ SOP นี้?')) return;
+  store.sops = store.sops.filter(s=>s.id!==id);
+  store.activeSOP = null;
+  document.getElementById('sopDetail').innerHTML = `<div class="detail-empty"><i class="ti ti-file-description"></i><p>เลือก SOP เพื่อดูรายละเอียด</p></div>`;
+  filterSOPs(); renderFolders(); save(); toast('ลบ SOP เรียบร้อย', 'ti-trash');
+}
+
+function exportSingle(id) {
+  const s = store.sops.find(x=>x.id===id);
+  if (!s) return;
+  downloadJSON([s], `sop_${s.id}.json`);
+  toast('Export สำเร็จ', 'ti-download');
+}
+
+function exportAll() {
+  downloadJSON(store.sops, 'sop_all_export.json');
+  toast(`Export ${store.sops.length} รายการสำเร็จ`, 'ti-download');
+}
+
+function downloadJSON(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
   a.click();
+  URL.revokeObjectURL(a.href);
 }
 
-function deleteSOP(id){
-  if(!confirm('ยืนยันการลบ SOP นี้?'))return;
-  store.sops=store.sops.filter(s=>s.id!==id);
-  store.activeSOP=null;
-  document.getElementById('sopDetail').innerHTML=`<div class="detail-empty"><i class="ti ti-file-description"></i><p>เลือก SOP เพื่อดูรายละเอียด</p></div>`;
-  filterSOPs();renderFolders();save();toast('ลบ SOP เรียบร้อย');
+function openFolderModal() {
+  document.getElementById('folderModal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('newFolderName').focus(), 50);
+}
+function closeFolderModal() { document.getElementById('folderModal').style.display = 'none'; document.getElementById('newFolderName').value=''; }
+function addFolder() {
+  const name = document.getElementById('newFolderName').value.trim();
+  if (!name) return;
+  store.folders.push({id:'f'+Date.now(), name, icon:'ti-folder'});
+  closeFolderModal(); renderFolders(); save(); toast('สร้างโฟลเดอร์เรียบร้อย', 'ti-folder-plus');
 }
 
-// ─── Import Modal ───
-function openImportModal(){
-  editingSopId=null;
-  pendingPdfData=null;
-  document.getElementById('sopModalTitle').textContent='เพิ่ม SOP ใหม่';
-  document.getElementById('sopModalIcon').className='ti ti-file-plus';
-  document.getElementById('sopSaveBtn').innerHTML='<i class="ti ti-device-floppy" style="margin-right:4px"></i>บันทึก SOP';
-  populateFolderSelects();
-  resetManualForm();
-  switchTab('manual');
-  document.getElementById('importModal').style.display='flex';
+/* ฟังก์ชันเปิด-ปิดและควบคุม Folder Settings Modal */
+function openFolderSettingsModal(id) {
+  const folder = store.folders.find(f => f.id === id);
+  if (!folder) return;
+  currentEditingFolderId = id;
+  document.getElementById('editFolderName').value = folder.name;
+  document.getElementById('editFolderIcon').value = folder.icon || 'ti-folder';
+  document.getElementById('folderSettingsModal').style.display = 'flex';
 }
-function openEditSOP(id){
-  editingSopId=id;
-  pendingPdfData=null;
-  const s=store.sops.find(x=>x.id===id);
-  if(!s)return;
-  document.getElementById('sopModalTitle').textContent='แก้ไข SOP';
-  document.getElementById('sopModalIcon').className='ti ti-edit';
-  document.getElementById('sopSaveBtn').innerHTML='<i class="ti ti-device-floppy" style="margin-right:4px"></i>บันทึกการแก้ไข';
-  // hide import tabs — only manual when editing
-  document.getElementById('sopTabs').style.display='none';
-  populateFolderSelects(s.folderId);
-  // fill manual
-  document.getElementById('sopTitle').value=s.title||'';
-  document.getElementById('sopFixture').value=s.fixture||'';
-  document.getElementById('sopCustomer').value=s.customer||'';
-  document.getElementById('sopDesc').value=s.desc||'';
-  const si=document.getElementById('stepsInput');
-  si.innerHTML='';
-  (s.steps&&s.steps.length?s.steps:['']). forEach((st,i)=>{
-    const row=document.createElement('div');row.className='step-row';
-    row.innerHTML=`<input placeholder="ขั้นตอนที่ ${i+1}..." value="${st.replace(/"/g,'&quot;')}"><button onclick="removeStep(this)"><i class="ti ti-x"></i></button>`;
-    si.appendChild(row);
-  });
-  switchTab('manual',true);
-  document.getElementById('importModal').style.display='flex';
+function closeFolderSettingsModal() {
+  document.getElementById('folderSettingsModal').style.display = 'none';
+  currentEditingFolderId = null;
 }
-function closeImportModal(){
-  document.getElementById('importModal').style.display='none';
-  document.getElementById('sopTabs').style.display='flex';
-  editingSopId=null;pendingPdfData=null;
-  resetManualForm();
-  document.getElementById('fileInputJson').value='';
-  document.getElementById('fileInputPdf').value='';
-  document.getElementById('jsonFileLabel').innerHTML='<strong>คลิกหรือลากไฟล์มาวาง</strong><br>รองรับ .json ที่ Export จากระบบนี้';
-  document.getElementById('pdfFileLabel').innerHTML='<strong>คลิกหรือลากไฟล์ PDF มาวาง</strong><br>ไฟล์จะถูกฝังและแสดงในหน้ารายละเอียด SOP';
-  document.getElementById('jsonDropZone').classList.remove('has-file');
-  document.getElementById('pdfDropZone').classList.remove('has-file');
-  document.getElementById('pdfDropIcon').className='ti ti-file-type-pdf';
+function saveFolderSettings() {
+  const name = document.getElementById('editFolderName').value.trim();
+  const icon = document.getElementById('editFolderIcon').value;
+  if (!name) { alert('กรุณากรอกชื่อโฟลเดอร์'); return; }
+
+  const folder = store.folders.find(f => f.id === currentEditingFolderId);
+  if (folder) {
+    folder.name = name;
+    folder.icon = icon;
+    renderFolders();
+    if(store.activeSOP) showSOP(store.activeSOP); // รีเฟรชหน้า Detail เผื่ออัปเดตแท็กโฟลเดอร์
+    save();
+    toast('บันทึกการตั้งค่าโฟลเดอร์แล้ว', 'ti-check');
+  }
+  closeFolderSettingsModal();
 }
-function resetManualForm(){
-  ['sopTitle','sopFixture','sopCustomer','sopDesc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('stepsInput').innerHTML=`<div class="step-row"><input placeholder="ขั้นตอนที่ 1..."><button onclick="removeStep(this)"><i class="ti ti-x"></i></button></div>`;
-}
-function populateFolderSelects(selected){
-  const opts=`<option value="">ไม่ระบุโฟลเดอร์</option>`+store.folders.map(f=>`<option value="${f.id}"${f.id===selected?' selected':''}>${f.name}</option>`).join('');
-  ['importFolder','importFolderJson','importFolderPdf'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.innerHTML=opts;
-  });
-  const af=store.activeFolder;
-  if(af&&!selected){['importFolder','importFolderJson','importFolderPdf'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=af;});}
-}
-function switchTab(tab, hideTabBar){
-  currentTab=tab;
-  ['manual','json','pdf'].forEach(t=>{
-    document.getElementById(`panel${t.charAt(0).toUpperCase()+t.slice(1)}`).classList.toggle('active',t===tab);
-    const tb=document.getElementById(`tab${t.charAt(0).toUpperCase()+t.slice(1)}`);
-    if(tb)tb.classList.toggle('active',t===tab);
-  });
+function deleteFolderFromSettings() {
+  if (!currentEditingFolderId) return;
+  const id = currentEditingFolderId;
+  if (!confirm('ลบโฟลเดอร์นี้? SOP ในโฟลเดอร์จะยังคงอยู่ในระบบ (ถูกย้ายออกไปอยู่ส่วนกลาง)')) return;
+  store.folders = store.folders.filter(f=>f.id!==id);
+  store.sops.forEach(s=>{ if(s.folderId===id) s.folderId=null; });
+  if (store.activeFolder===id) store.activeFolder=null;
+  closeFolderSettingsModal();
+  renderFolders(); filterSOPs(); save(); toast('ลบโฟลเดอร์เรียบร้อย', 'ti-trash');
 }
 
-// ─── Steps ───
-function addStepInput(){
-  const c=document.getElementById('stepsInput');
-  const n=c.children.length+1;
-  const row=document.createElement('div');row.className='step-row';
-  row.innerHTML=`<input placeholder="ขั้นตอนที่ ${n}..."><button onclick="removeStep(this)"><i class="ti ti-x"></i></button>`;
-  c.appendChild(row);row.querySelector('input').focus();
+function openImportModal() {
+  const sel = document.getElementById('importFolder');
+  sel.innerHTML = `<option value="">ไม่ระบุโฟลเดอร์</option>` + store.folders.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  if (store.activeFolder) sel.value = store.activeFolder;
+  document.getElementById('importModal').style.display = 'flex';
 }
-function removeStep(btn){
-  const c=document.getElementById('stepsInput');
-  if(c.children.length>1)btn.parentElement.remove();
-  else btn.parentElement.querySelector('input').value='';
-}
-
-// ─── Drag & Drop ───
-function dragOver(e,zone){e.preventDefault();document.getElementById(zone).classList.add('drag');}
-function dragLeave(zone){document.getElementById(zone).classList.remove('drag');}
-function dropFile(e,type){
-  e.preventDefault();
-  const zone=type==='pdf'?'pdfDropZone':'jsonDropZone';
-  document.getElementById(zone).classList.remove('drag');
-  const file=e.dataTransfer.files[0];
-  if(!file)return;
-  if(type==='pdf'){processPdfFile(file);}
-  else{processJsonFile(file);}
+function closeImportModal() {
+  document.getElementById('importModal').style.display = 'none';
+  ['sopTitle','sopFixture','sopCustomer','sopDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('stepsInput').innerHTML = `<div class="step-row"><input placeholder="ขั้นตอนที่ 1..."><button onclick="removeStep(this)" title="ลบ"><i class="ti ti-x"></i></button></div>`;
+  document.getElementById('fileInput').value = '';
 }
 
-// ─── PDF ───
-function handlePdfSelect(e){const file=e.target.files[0];if(file)processPdfFile(file);}
-function processPdfFile(file){
-  if(!file.name.toLowerCase().endsWith('.pdf')){toast('กรุณาเลือกไฟล์ .pdf','error');return;}
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    pendingPdfData=ev.target.result;
-    document.getElementById('pdfFileLabel').innerHTML=`<strong style="color:var(--accent)">${file.name}</strong><br><span style="color:var(--accent)">พร้อมบันทึก (${(file.size/1024/1024).toFixed(2)} MB)</span>`;
-    document.getElementById('pdfDropZone').classList.add('has-file');
-    document.getElementById('pdfDropIcon').className='ti ti-circle-check';
-    document.getElementById('pdfDropIcon').style.color='var(--accent)';
-    if(!document.getElementById('sopTitlePdf').value){
-      document.getElementById('sopTitlePdf').value=file.name.replace(/\.pdf$/i,'');
-    }
-  };
-  reader.readAsDataURL(file);
+function addStepInput() {
+  const c = document.getElementById('stepsInput');
+  const n = c.children.length + 1;
+  const row = document.createElement('div');
+  row.className = 'step-row';
+  row.innerHTML = `<input placeholder="ขั้นตอนที่ ${n}..."><button onclick="removeStep(this)" title="ลบ"><i class="ti ti-x"></i></button>`;
+  c.appendChild(row);
+  row.querySelector('input').focus();
+}
+function removeStep(btn) {
+  const c = document.getElementById('stepsInput');
+  if (c.children.length > 1) btn.parentElement.remove();
+  else btn.parentElement.querySelector('input').value = '';
 }
 
-// ─── JSON import ───
-function handleJsonImport(e){const file=e.target.files[0];if(file)processJsonFile(file);}
-function processJsonFile(file){
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    try{
-      const data=JSON.parse(ev.target.result);
-      const arr=Array.isArray(data)?data:[data];
-      const folderId=document.getElementById('importFolderJson').value||null;
-      const user=store.currentUser.name||'ไม่ระบุ';
-      let count=0;
-      arr.forEach(s=>{
-        if(s.title){
-          store.sops.push({id:'s'+Date.now()+Math.random().toString(36).slice(2,5),folderId:folderId||s.folderId||null,title:s.title,fixture:s.fixture||'',customer:s.customer||'',desc:s.desc||'',steps:s.steps||[],addedBy:user,addedAt:new Date().toISOString()});
+function handleFileImport(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const arr = Array.isArray(data) ? data : [data];
+      const folderId = document.getElementById('importFolder').value || null;
+      let count = 0;
+      arr.forEach(s => {
+        if (s.title) {
+          store.sops.push({id:'s'+Date.now()+Math.random().toString(36).slice(2,6), folderId:folderId||s.folderId||null, title:s.title, problem:s.problem||'', fixture:s.fixture||'', customer:s.customer||'', desc:s.desc||'', steps:s.steps||[]});
           count++;
         }
       });
-      closeImportModal();filterSOPs();renderFolders();save();
-      toast(`นำเข้า ${count} รายการสำเร็จ`);
-    }catch(err){toast('ไฟล์ JSON ไม่ถูกต้อง','error');}
+      closeImportModal(); filterSOPs(); renderFolders(); save();
+      toast(`นำเข้า ${count} รายการสำเร็จ`, 'ti-check');
+    } catch(err) { alert('ไฟล์ JSON ไม่ถูกต้อง กรุณาตรวจสอบรูปแบบ'); }
   };
   reader.readAsText(file);
+  e.target.value = '';
 }
 
-// ─── Save SOP ───
-function saveSOP(){
-  if(currentTab==='json'){toast('กรุณาเลือกไฟล์ JSON ก่อน','error');return;}
-  const isPdf=currentTab==='pdf';
-  const titleId=isPdf?'sopTitlePdf':'sopTitle';
-  const title=document.getElementById(titleId).value.trim();
-  if(!title){toast('กรุณาใส่ชื่อ SOP','error');return;}
-  if(isPdf&&!pendingPdfData&&!editingSopId){toast('กรุณาเลือกไฟล์ PDF','error');return;}
-
-  const user=store.currentUser.name||'ไม่ระบุชื่อ';
-  const now=new Date().toISOString();
-
-  if(editingSopId){
-    const s=store.sops.find(x=>x.id===editingSopId);
-    if(s){
-      s.title=title;
-      s.fixture=document.getElementById('sopFixture').value.trim();
-      s.customer=document.getElementById('sopCustomer').value.trim();
-      s.desc=document.getElementById('sopDesc').value.trim();
-      s.steps=[...document.getElementById('stepsInput').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
-      s.folderId=document.getElementById('importFolder').value||null;
-      s.updatedBy=user;s.updatedAt=now;
-    }
-    toast('แก้ไข SOP เรียบร้อย');
-  } else {
-    const folderId=document.getElementById(isPdf?'importFolderPdf':'importFolder').value||null;
-    const newSop={
-      id:'s'+Date.now(),folderId,title,addedBy:user,addedAt:now,
-      fixture:isPdf?document.getElementById('sopFixturePdf').value.trim():document.getElementById('sopFixture').value.trim(),
-      customer:isPdf?document.getElementById('sopCustomerPdf').value.trim():document.getElementById('sopCustomer').value.trim(),
-      desc:isPdf?'':document.getElementById('sopDesc').value.trim(),
-      steps:isPdf?[]:[...document.getElementById('stepsInput').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean),
-    };
-    if(isPdf&&pendingPdfData)newSop.pdfData=pendingPdfData;
-    store.sops.push(newSop);
-    toast('บันทึก SOP เรียบร้อย');
-  }
-  closeImportModal();filterSOPs();renderFolders();save();
-  if(editingSopId||store.activeSOP)showSOP(editingSopId||store.activeSOP);
+function saveManualSOP() {
+  const title = document.getElementById('sopTitle').value.trim();
+  if (!title) { alert('กรุณาใส่ชื่อ SOP / ปัญหา'); return; }
+  const steps = [...document.getElementById('stepsInput').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
+  const folderId = document.getElementById('importFolder').value || null;
+  store.sops.push({
+    id: 's'+Date.now(),
+    folderId,
+    title,
+    problem: title,
+    fixture: document.getElementById('sopFixture').value.trim(),
+    customer: document.getElementById('sopCustomer').value.trim(),
+    desc: document.getElementById('sopDesc').value.trim(),
+    steps
+  });
+  closeImportModal(); filterSOPs(); renderFolders(); save();
+  toast('บันทึก SOP เรียบร้อย', 'ti-check');
 }
 
-// ─── Export ───
-function exportSingle(id){
-  const s=store.sops.find(x=>x.id===id);
-  if(!s)return;
-  const exp={...s};delete exp.pdfData;
-  downloadJSON([exp],`sop_${s.id}.json`);toast('Export สำเร็จ');
-}
-function exportAll(){
-  const exp=store.sops.map(s=>{const c={...s};delete c.pdfData;return c;});
-  downloadJSON(exp,'sop_all_export.json');toast(`Export ${exp.length} รายการสำเร็จ`);
-}
-function downloadJSON(data,filename){
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href);
-}
-
-// ─── Init ───
-load();initUser();renderFolders();filterSOPs();
+load(); renderFolders(); filterSOPs();
 </script>
 </body>
 </html>
