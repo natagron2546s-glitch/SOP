@@ -1,0 +1,654 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ตารางหนี้รายเดือน</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: summary tiles on top, then a left rail (form + debt list) beside the month-by-month chart and ledger table. */
+:root {
+  --bg: #EDF0F3;
+  --surface: #FFFFFF;
+  --surface-2: #F4F6F8;
+  --ink: #13202B;
+  --muted: #586A78;
+  --line: #D6DDE3;
+  --accent: #1B4F8A;
+  --accent-ink: #FFFFFF;
+  --warn: #B4531A;
+  --good: #1B7F5C;
+  --s1: #2F6DB5;
+  --s2: #1E9E8F;
+  --s3: #D99A1E;
+  --s4: #7A5BC7;
+  --s5: #D2547A;
+  --s6: #6B9A2F;
+  --font-display: "Bai Jamjuree", "Noto Sans Thai", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E151B; --surface: #16212A; --surface-2: #1B2833; --ink: #E4ECF2; --muted: #98A9B6; --line: #2A3A47;
+    --accent: #6AA6EA; --accent-ink: #0B1620; --warn: #F0A068; --good: #4FC79B;
+    --s1: #5B9BE3; --s2: #39C0AE; --s3: #EDB544; --s4: #A08BE6; --s5: #EE7F9E; --s6: #9CC454;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E151B; --surface: #16212A; --surface-2: #1B2833; --ink: #E4ECF2; --muted: #98A9B6; --line: #2A3A47;
+  --accent: #6AA6EA; --accent-ink: #0B1620; --warn: #F0A068; --good: #4FC79B;
+  --s1: #5B9BE3; --s2: #39C0AE; --s3: #EDB544; --s4: #A08BE6; --s5: #EE7F9E; --s6: #9CC454;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 var(--font-body);
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.4vw, 40px); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 18px; font-weight: 600; }
+.lede { margin: 8px 0 0; color: var(--muted); max-width: 62ch; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px; min-width: 0; }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.hint { color: var(--muted); font-size: 13px; }
+
+.banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--surface-2); border: 1px dashed var(--line); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+.banner p { margin: 0; min-width: 0; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tile.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.tile .k { font-size: 13px; color: var(--muted); }
+.tile.primary .k { color: var(--accent-ink); opacity: .85; }
+.tile .v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: clamp(20px, 2.6vw, 26px); font-weight: 500; line-height: 1.2; overflow-wrap: anywhere; }
+.tile .s { font-size: 13px; color: var(--muted); }
+.tile.primary .s { color: var(--accent-ink); opacity: .85; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 350px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.rail, .main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+form { display: flex; flex-direction: column; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+label { font-size: 13px; font-weight: 500; color: var(--muted); }
+input, select, button { font: inherit; color: inherit; }
+input, select {
+  width: 100%; min-width: 0; padding: 9px 10px; background: var(--surface-2); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 6px;
+}
+input[type="number"] { font-family: var(--font-mono); }
+input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn { cursor: pointer; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 9px 14px; font-weight: 500; }
+.btn:hover { background: var(--surface-2); }
+.btn.solid { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.solid:hover { filter: brightness(1.08); background: var(--accent); }
+.btn.small { padding: 4px 10px; font-size: 13px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.err { color: var(--warn); font-size: 13px; margin: 0; }
+
+.debt { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 4px 10px; padding: 12px 0; border-top: 1px solid var(--line); align-items: start; }
+.debt:first-child { border-top: 0; padding-top: 0; }
+.dot { width: 12px; height: 12px; border-radius: 3px; margin-top: 6px; }
+.debt .name { font-weight: 600; overflow-wrap: anywhere; }
+.debt .meta { color: var(--muted); font-size: 13px; grid-column: 2 / 4; }
+.debt .pay { text-align: right; font-size: 14px; white-space: nowrap; }
+.debt .warn { color: var(--warn); font-size: 13px; grid-column: 2 / 4; }
+.debt .acts { grid-column: 2 / 4; display: flex; gap: 8px; margin-top: 4px; }
+.empty { color: var(--muted); margin: 0; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end; }
+.controls .field { width: 190px; max-width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface-2); padding: 9px 14px; cursor: pointer; border-left: 1px solid var(--line); }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 10px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.chartwrap, .tablewrap { overflow-x: auto; }
+.chartwrap svg { display: block; width: 100%; height: auto; }
+.ax { fill: var(--muted); font: 11px var(--font-mono); }
+.ax.tot { fill: var(--ink); font-size: 10px; }
+.grid { stroke: var(--line); stroke-width: 1; }
+
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 12px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--surface-2); }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+th:first-child { background: var(--surface-2); }
+td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td:first-child { font-family: var(--font-body); }
+tr.ny td { border-top: 2px solid var(--muted); }
+td.zero { color: var(--muted); }
+td.total { font-weight: 500; color: var(--ink); }
+td.int { color: var(--warn); }
+tfoot td { font-weight: 600; background: var(--surface-2); border-bottom: 0; }
+tfoot td:first-child { background: var(--surface-2); }
+.close { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; font: 500 11px var(--font-body); color: var(--good); border: 1px solid var(--good); }
+th .dot { display: inline-block; width: 9px; height: 9px; margin: 0 6px 0 0; vertical-align: baseline; }
+
+.toast { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); z-index: 20; pointer-events: none; }
+.toast div { pointer-events: auto; background: var(--ink); color: var(--bg); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 14px; font-size: 14px; }
+.toast button { background: none; border: 0; color: inherit; text-decoration: underline; cursor: pointer; font-weight: 600; padding: 0; }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: background .12s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>ตารางหนี้รายเดือน</h1>
+    <p class="lede">ใส่หนี้ทุกก้อนที่ผ่อนอยู่ แล้วดูว่าแต่ละเดือนต้องจ่ายรวมเท่าไหร่ เป็นต้นเท่าไหร่ ดอกเบี้ยเท่าไหร่ ตลอด 12 ถึง 36 เดือนข้างหน้า</p>
+  </header>
+
+  <div id="banner" class="banner" hidden>
+    <p>ตอนนี้แสดงข้อมูลตัวอย่าง แก้ไขหรือลบแล้วใส่หนี้ของคุณเองได้เลย</p>
+    <button type="button" class="btn small" id="clear-ex">ล้างข้อมูลตัวอย่าง</button>
+  </div>
+
+  <section id="tiles" class="tiles" aria-label="สรุปหนี้"></section>
+
+  <div class="layout">
+    <aside class="rail">
+      <form id="form" class="card" novalidate>
+        <div class="card-head"><h2 id="form-title">เพิ่มหนี้</h2></div>
+        <div class="field">
+          <label for="f-name">ชื่อหนี้</label>
+          <input id="f-name" type="text" maxlength="60" placeholder="เช่น ผ่อนรถ บัตรเครดิต">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-principal">ยอดหนี้ (บาท)</label>
+            <input id="f-principal" type="number" inputmode="decimal" min="0" step="any" placeholder="500000">
+          </div>
+          <div class="field">
+            <label for="f-rate">ดอกเบี้ย % ต่อปี</label>
+            <input id="f-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0 ถ้าไม่มี">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-type">วิธีคิดดอกเบี้ย</label>
+          <select id="f-type">
+            <option value="reducing">ลดต้นลดดอก (บัตรเครดิต สินเชื่อบุคคล บ้าน)</option>
+            <option value="flat">อัตราคงที่ Flat rate (รถ ผ่อนสินค้า)</option>
+          </select>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-mode">กำหนดจาก</label>
+            <select id="f-mode">
+              <option value="pay">ค่างวดต่อเดือน</option>
+              <option value="term">จำนวนงวด</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-value" id="f-value-label">ค่างวด (บาท)</label>
+            <input id="f-value" type="number" inputmode="decimal" min="0" step="any">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-start">จ่ายงวดแรกเดือน</label>
+          <input id="f-start" type="month">
+        </div>
+        <p class="err" id="err" role="alert" hidden></p>
+        <div class="actions">
+          <button type="submit" class="btn solid" id="f-submit">เพิ่มหนี้</button>
+          <button type="button" class="btn" id="f-cancel" hidden>ยกเลิก</button>
+        </div>
+      </form>
+
+      <div class="card">
+        <div class="card-head"><h2>รายการหนี้</h2><span class="hint" id="list-count"></span></div>
+        <div id="list"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="card controls">
+        <div class="field">
+          <label for="v-start">ดูตั้งแต่เดือน</label>
+          <input id="v-start" type="month">
+        </div>
+        <div class="field" style="width:auto">
+          <label id="h-label">ช่วงที่ดู</label>
+          <div class="seg" role="group" aria-labelledby="h-label" id="seg">
+            <button type="button" data-h="12" aria-pressed="true">12 เดือน</button>
+            <button type="button" data-h="24" aria-pressed="false">24 เดือน</button>
+            <button type="button" data-h="36" aria-pressed="false">36 เดือน</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>ยอดจ่ายแต่ละเดือน</h2><span class="hint">บาท แยกตามหนี้แต่ละก้อน</span></div>
+        <div class="legend" id="legend"></div>
+        <div class="chartwrap" id="chart"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>ตารางรายเดือน</h2><span class="hint">ปีแสดงเป็น พ.ศ.</span></div>
+        <div class="tablewrap" id="table"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden><div><span id="toast-msg"></span><button type="button" id="toast-undo">ย้อนกลับ</button></div></div>
+
+<script>
+(function () {
+  var KEY = 'debt-planner-v1';
+  var MAX = 600;
+  var TH_M = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+  var nf0 = new Intl.NumberFormat('th-TH', { maximumFractionDigits: 0 });
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function money(n) { return nf0.format(Math.round(n)); }
+  function nowIdx() { var d = new Date(); return d.getFullYear() * 12 + d.getMonth(); }
+  function idxOf(s) {
+    var p = String(s).split('-');
+    var y = parseInt(p[0], 10), m = parseInt(p[1], 10);
+    if (isNaN(y) || isNaN(m)) return nowIdx();
+    return y * 12 + (m - 1);
+  }
+  function toVal(i) {
+    var y = Math.floor(i / 12), m = (i % 12) + 1;
+    return y + '-' + (m < 10 ? '0' : '') + m;
+  }
+  function labelOf(i) { return TH_M[i % 12] + ' ' + (Math.floor(i / 12) + 543); }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function colorOf(ix) { return 'var(--s' + (ix % 6 + 1) + ')'; }
+
+  /* ---------- calculation ---------- */
+  function build(d) {
+    var P = +d.principal, r = (+d.rate) / 100 / 12, v = +d.value;
+    var rows = [], bal = P, warn = null, k = 0, pay = 0, n = 0;
+    if (!(P > 0) || !(v > 0)) return { rows: rows, pay: 0, warn: null, interest: 0 };
+    var st = idxOf(d.start);
+
+    if (d.type === 'flat') {
+      var mi = P * r, pp;
+      if (d.mode === 'term') { n = Math.max(1, Math.round(v)); pp = P / n; pay = pp + mi; }
+      else {
+        pay = v; pp = pay - mi;
+        if (pp <= 0) return { rows: rows, pay: pay, warn: 'ค่างวดต่ำกว่าดอกเบี้ยต่อเดือน', interest: 0 };
+        n = Math.ceil(P / pp - 1e-9);
+      }
+      while (bal > 0.005 && k < MAX) {
+        var pr = Math.min(pp, bal);
+        bal -= pr;
+        rows.push({ idx: st + k, pay: pr + mi, interest: mi, principal: pr, bal: Math.max(bal, 0) });
+        k++;
+      }
+    } else {
+      if (d.mode === 'term') {
+        n = Math.max(1, Math.round(v));
+        pay = r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n));
+      } else { pay = v; }
+      var cap = MAX;
+      if (pay <= P * r + 1e-9 && r > 0) {
+        warn = 'ค่างวดต่ำกว่าดอกเบี้ยต่อเดือน หนี้จะไม่ลดลง';
+        cap = 120;
+      }
+      while (bal > 0.005 && k < cap) {
+        var it = bal * r;
+        var pv = Math.min(pay, bal + it);
+        var pc = pv - it;
+        bal -= pc;
+        rows.push({ idx: st + k, pay: pv, interest: it, principal: pc, bal: Math.max(bal, 0) });
+        k++;
+      }
+    }
+    var ti = 0;
+    rows.forEach(function (x) { ti += x.interest; });
+    return { rows: rows, pay: pay, warn: warn, interest: ti };
+  }
+
+  /* ---------- state ---------- */
+  function seed() {
+    var s = toVal(nowIdx());
+    return [
+      { id: uid(), name: 'ผ่อนรถ', principal: 480000, rate: 2.79, type: 'flat', mode: 'term', value: 48, start: s, ex: true },
+      { id: uid(), name: 'บัตรเครดิต', principal: 45000, rate: 16, type: 'reducing', mode: 'pay', value: 3500, start: s, ex: true },
+      { id: uid(), name: 'ผ่อนมือถือ 0%', principal: 30000, rate: 0, type: 'reducing', mode: 'term', value: 10, start: s, ex: true }
+    ];
+  }
+  var state = null;
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) {
+      var o = JSON.parse(raw);
+      if (o && Array.isArray(o.debts)) state = o;
+    }
+  } catch (e) {}
+  if (!state) state = { debts: seed(), view: toVal(nowIdx()), H: 12 };
+  if (!/^\d{4}-\d{2}$/.test(state.view || '')) state.view = toVal(nowIdx());
+  if ([12, 24, 36].indexOf(state.H) < 0) state.H = 12;
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var editing = null;
+  var lastDeleted = null, toastTimer = null;
+
+  /* ---------- render ---------- */
+  function renderAll() {
+    var debts = state.debts;
+    var H = state.H, vi = idxOf(state.view);
+    var res = debts.map(build);
+
+    var months = [];
+    for (var j = 0; j < H; j++) {
+      var m = vi + j;
+      var row = { idx: m, cells: [], closing: [], total: 0, interest: 0, principal: 0, bal: 0 };
+      debts.forEach(function (d, ix) {
+        var b = res[ix], st = idxOf(d.start), k = m - st, c = null;
+        if (k >= 0 && k < b.rows.length) c = b.rows[k];
+        var pay = c ? Math.round(c.pay) : 0;
+        row.cells.push(pay);
+        row.total += pay;
+        row.interest += c ? Math.round(c.interest) : 0;
+        row.principal += c ? Math.round(c.principal) : 0;
+        row.closing.push(!!(c && k === b.rows.length - 1 && !b.warn));
+        var bal;
+        if (b.rows.length === 0) bal = 0;
+        else if (k < 0) bal = +d.principal;
+        else if (k >= b.rows.length) bal = 0;
+        else bal = c.bal;
+        row.bal += Math.round(bal);
+      });
+      months.push(row);
+    }
+
+    renderBanner();
+    renderTiles(debts, res, months);
+    renderList(debts, res);
+    renderLegend(debts);
+    renderChart(debts, months);
+    renderTable(debts, months);
+    $('v-start').value = state.view;
+    Array.prototype.forEach.call($('seg').children, function (b) {
+      b.setAttribute('aria-pressed', String(+b.getAttribute('data-h') === state.H));
+    });
+  }
+
+  function renderBanner() {
+    $('banner').hidden = !state.debts.some(function (d) { return d.ex; });
+  }
+
+  function renderTiles(debts, res, months) {
+    if (!debts.length) {
+      $('tiles').innerHTML = '<div class="tile"><span class="k">ยังไม่มีหนี้ในรายการ</span><span class="s">เพิ่มหนี้ทางซ้ายเพื่อดูสรุปยอดจ่ายรายเดือน</span></div>';
+      return;
+    }
+    var H = months.length;
+    var sumP = 0, tot = 0, ti = 0, anyWarn = false, endIdx = -1;
+    debts.forEach(function (d, ix) {
+      sumP += +d.principal;
+      var b = res[ix];
+      if (b.warn) anyWarn = true;
+      if (b.rows.length) endIdx = Math.max(endIdx, b.rows[b.rows.length - 1].idx);
+    });
+    months.forEach(function (r) { tot += r.total; ti += r.interest; });
+    var first = months[0];
+    var pct = tot > 0 ? Math.round(ti / tot * 100) : 0;
+    var endV = '—', endS = 'ไม่มีรายการที่คำนวณได้';
+    if (anyWarn) { endV = '—'; endS = 'มีหนี้ที่ค่างวดต่ำกว่าดอกเบี้ย'; }
+    else if (endIdx >= 0) {
+      endV = labelOf(endIdx);
+      var left = endIdx - nowIdx() + 1;
+      if (left <= 0) endS = 'ปิดครบแล้ว';
+      else {
+        var yy = Math.floor(left / 12), mm = left % 12;
+        endS = 'อีก ' + (yy ? yy + ' ปี ' : '') + (mm ? mm + ' เดือน' : '');
+        endS = endS.trim();
+      }
+    }
+    $('tiles').innerHTML =
+      '<div class="tile"><span class="k">ยอดหนี้รวม</span><span class="v">฿' + money(sumP) + '</span><span class="s">' + debts.length + ' ก้อน</span></div>' +
+      '<div class="tile primary"><span class="k">จ่ายเดือน ' + labelOf(first.idx) + '</span><span class="v">฿' + money(first.total) + '</span><span class="s">ต้น ฿' + money(first.principal) + ' · ดอก ฿' + money(first.interest) + '</span></div>' +
+      '<div class="tile"><span class="k">จ่ายรวม ' + H + ' เดือน</span><span class="v">฿' + money(tot) + '</span><span class="s">เฉลี่ยเดือนละ ฿' + money(tot / H) + '</span></div>' +
+      '<div class="tile"><span class="k">ดอกเบี้ยในช่วงนี้</span><span class="v">฿' + money(ti) + '</span><span class="s">' + pct + '% ของที่จ่าย</span></div>' +
+      '<div class="tile"><span class="k">หมดหนี้ทุกก้อน</span><span class="v">' + esc(endV) + '</span><span class="s">' + esc(endS) + '</span></div>';
+  }
+
+  function renderList(debts, res) {
+    $('list-count').textContent = debts.length ? debts.length + ' ก้อน' : '';
+    if (!debts.length) {
+      $('list').innerHTML = '<p class="empty">ยังไม่มีหนี้ กรอกฟอร์มด้านบนแล้วกด “เพิ่มหนี้”</p>';
+      return;
+    }
+    $('list').innerHTML = debts.map(function (d, ix) {
+      var b = res[ix];
+      var kind = d.type === 'flat' ? 'Flat rate' : 'ลดต้นลดดอก';
+      var meta = d.rate + '% ต่อปี · ' + kind + ' · เริ่ม ' + labelOf(idxOf(d.start));
+      var info = '';
+      if (b.rows.length && !b.warn) {
+        info = 'ปิดหนี้ ' + labelOf(b.rows[b.rows.length - 1].idx) + ' · ' + b.rows.length + ' งวด · ดอกเบี้ยตลอดสัญญา ฿' + money(b.interest);
+      }
+      return '<div class="debt" data-id="' + esc(d.id) + '">' +
+        '<span class="dot" style="background:' + colorOf(ix) + '"></span>' +
+        '<div class="name">' + esc(d.name) + ' <span class="hint num">฿' + money(d.principal) + '</span></div>' +
+        '<div class="pay num">฿' + money(b.pay) + '<br><span class="hint">ต่อเดือน</span></div>' +
+        '<div class="meta">' + esc(meta) + (info ? '<br>' + esc(info) : '') + '</div>' +
+        (b.warn ? '<div class="warn">' + esc(b.warn) + '</div>' : '') +
+        '<div class="acts"><button type="button" class="btn small" data-act="edit">แก้ไข</button><button type="button" class="btn small" data-act="del">ลบ</button></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderLegend(debts) {
+    $('legend').innerHTML = debts.map(function (d, ix) {
+      return '<span><i style="background:' + colorOf(ix) + '"></i>' + esc(d.name) + '</span>';
+    }).join('');
+  }
+
+  function niceStep(v) {
+    if (v <= 0) return 1;
+    var e = Math.pow(10, Math.floor(Math.log(v) / Math.LN10)), f = v / e;
+    var n = f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10;
+    return n * e;
+  }
+
+  function renderChart(debts, months) {
+    var box = $('chart');
+    var H = months.length;
+    var max = 0;
+    months.forEach(function (r) { if (r.total > max) max = r.total; });
+    if (!debts.length || max <= 0) {
+      box.innerHTML = '<p class="empty">ยังไม่มียอดจ่ายในช่วงนี้ ลองเปลี่ยนเดือนที่ดูหรือเพิ่มหนี้</p>';
+      return;
+    }
+    var W = Math.max(560, H * 46 + 70), HT = 290, pl = 62, pr = 12, pt = 22, pb = 44;
+    var iw = W - pl - pr, ih = HT - pt - pb;
+    var step = niceStep(max / 4);
+    var top = Math.ceil(max / step) * step;
+    function y(v) { return pt + ih * (1 - v / top); }
+    var bw = iw / H, barW = Math.min(bw * 0.64, 40);
+    var s = '<svg viewBox="0 0 ' + W + ' ' + HT + '" style="min-width:' + W + 'px" role="img" aria-label="กราฟแท่งยอดจ่ายรายเดือน">';
+    for (var t = 0; t <= top + 1e-6; t += step) {
+      s += '<line class="grid" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(t) + '" y2="' + y(t) + '"/>';
+      s += '<text class="ax" x="' + (pl - 8) + '" y="' + (y(t) + 4) + '" text-anchor="end">' + money(t) + '</text>';
+    }
+    months.forEach(function (r, j) {
+      var x = pl + j * bw + (bw - barW) / 2;
+      var acc = 0;
+      var tip = labelOf(r.idx) + ' รวม ฿' + money(r.total);
+      var g = '';
+      r.cells.forEach(function (c, ix) {
+        if (c <= 0) return;
+        var y0 = y(acc), y1 = y(acc + c);
+        g += '<rect x="' + x + '" y="' + y1 + '" width="' + barW + '" height="' + Math.max(y0 - y1, 0.5) + '" style="fill:' + colorOf(ix) + '"/>';
+        tip += '\n' + debts[ix].name + ' ฿' + money(c);
+        acc += c;
+      });
+      s += '<g><title>' + esc(tip) + '</title>' + g + '</g>';
+      var cx = x + barW / 2;
+      if (H <= 12 && r.total > 0) s += '<text class="ax tot" x="' + cx + '" y="' + (y(r.total) - 5) + '" text-anchor="middle">' + money(r.total) + '</text>';
+      var mo = r.idx % 12;
+      if (H <= 12 || j % 3 === 0 || mo === 0) {
+        s += '<text class="ax" x="' + cx + '" y="' + (HT - pb + 16) + '" text-anchor="middle">' + TH_M[mo] + '</text>';
+        if (j === 0 || mo === 0) s += '<text class="ax" x="' + cx + '" y="' + (HT - pb + 30) + '" text-anchor="middle">' + (Math.floor(r.idx / 12) + 543) + '</text>';
+      }
+    });
+    s += '</svg>';
+    box.innerHTML = s;
+  }
+
+  function renderTable(debts, months) {
+    var box = $('table');
+    if (!debts.length) { box.innerHTML = '<p class="empty">เพิ่มหนี้เพื่อดูตารางรายเดือน</p>'; return; }
+    var h = '<table><thead><tr><th>เดือน</th>';
+    debts.forEach(function (d, ix) {
+      h += '<th><span class="dot" style="background:' + colorOf(ix) + '"></span>' + esc(d.name) + '</th>';
+    });
+    h += '<th>รวมจ่าย</th><th>เป็นดอกเบี้ย</th><th>หนี้คงเหลือ</th></tr></thead><tbody>';
+    var sums = debts.map(function () { return 0; });
+    var T = 0, I = 0;
+    months.forEach(function (r, j) {
+      var mo = r.idx % 12;
+      h += '<tr' + (mo === 0 && j > 0 ? ' class="ny"' : '') + '><td>' + labelOf(r.idx) + '</td>';
+      r.cells.forEach(function (c, ix) {
+        sums[ix] += c;
+        h += '<td' + (c ? '' : ' class="zero"') + '>' + (c ? money(c) : '–') + (r.closing[ix] ? '<span class="close">ปิดหนี้</span>' : '') + '</td>';
+      });
+      T += r.total; I += r.interest;
+      h += '<td class="total">' + money(r.total) + '</td><td class="int' + (r.interest ? '' : ' zero') + '">' + (r.interest ? money(r.interest) : '–') + '</td><td>' + money(r.bal) + '</td></tr>';
+    });
+    h += '</tbody><tfoot><tr><td>รวม ' + months.length + ' เดือน</td>';
+    sums.forEach(function (c) { h += '<td>' + money(c) + '</td>'; });
+    h += '<td>' + money(T) + '</td><td>' + money(I) + '</td><td></td></tr></tfoot></table>';
+    box.innerHTML = h;
+  }
+
+  /* ---------- form ---------- */
+  var f = {
+    name: $('f-name'), principal: $('f-principal'), rate: $('f-rate'), type: $('f-type'),
+    mode: $('f-mode'), value: $('f-value'), start: $('f-start')
+  };
+  function syncModeLabel() {
+    $('f-value-label').textContent = f.mode.value === 'pay' ? 'ค่างวด (บาท)' : 'จำนวนงวด (เดือน)';
+  }
+  function showErr(msg) {
+    var e = $('err');
+    e.textContent = msg || '';
+    e.hidden = !msg;
+  }
+  function resetForm() {
+    editing = null;
+    f.name.value = ''; f.principal.value = ''; f.rate.value = '';
+    f.type.value = 'reducing'; f.mode.value = 'pay'; f.value.value = '';
+    f.start.value = toVal(nowIdx());
+    $('form-title').textContent = 'เพิ่มหนี้';
+    $('f-submit').textContent = 'เพิ่มหนี้';
+    $('f-cancel').hidden = true;
+    showErr('');
+    syncModeLabel();
+  }
+  f.mode.addEventListener('change', syncModeLabel);
+  $('f-cancel').addEventListener('click', resetForm);
+
+  $('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var P = parseFloat(f.principal.value), rt = parseFloat(f.rate.value), v = parseFloat(f.value.value);
+    if (!(P > 0)) return showErr('ใส่ยอดหนี้มากกว่า 0 บาท');
+    if (isNaN(rt) || rt < 0) return showErr('ใส่ดอกเบี้ยต่อปี (ใส่ 0 ถ้าไม่มีดอกเบี้ย)');
+    if (!(v > 0)) return showErr(f.mode.value === 'pay' ? 'ใส่ค่างวดต่อเดือนมากกว่า 0 บาท' : 'ใส่จำนวนงวดอย่างน้อย 1 เดือน');
+    if (!f.start.value) return showErr('เลือกเดือนที่จ่ายงวดแรก');
+    var item = {
+      id: editing || uid(),
+      name: f.name.value.trim() || 'หนี้ก้อนที่ ' + (state.debts.length + (editing ? 0 : 1)),
+      principal: P, rate: rt, type: f.type.value, mode: f.mode.value,
+      value: f.mode.value === 'term' ? Math.max(1, Math.round(v)) : v,
+      start: f.start.value
+    };
+    if (editing) {
+      state.debts = state.debts.map(function (d) { return d.id === editing ? item : d; });
+    } else {
+      state.debts.push(item);
+    }
+    save();
+    resetForm();
+    renderAll();
+  });
+
+  $('list').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-act]');
+    if (!btn) return;
+    var id = btn.closest('.debt').getAttribute('data-id');
+    var ix = state.debts.findIndex(function (d) { return d.id === id; });
+    if (ix < 0) return;
+    if (btn.getAttribute('data-act') === 'edit') {
+      var d = state.debts[ix];
+      editing = d.id;
+      f.name.value = d.name; f.principal.value = d.principal; f.rate.value = d.rate;
+      f.type.value = d.type; f.mode.value = d.mode; f.value.value = d.value; f.start.value = d.start;
+      $('form-title').textContent = 'แก้ไขหนี้';
+      $('f-submit').textContent = 'บันทึกการแก้ไข';
+      $('f-cancel').hidden = false;
+      showErr('');
+      syncModeLabel();
+      $('form').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      f.name.focus();
+    } else {
+      lastDeleted = { debt: state.debts[ix], index: ix };
+      state.debts.splice(ix, 1);
+      if (editing === id) resetForm();
+      save();
+      renderAll();
+      showToast('ลบ “' + lastDeleted.debt.name + '” แล้ว');
+    }
+  });
+
+  function showToast(msg) {
+    $('toast-msg').textContent = msg;
+    $('toast').hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $('toast').hidden = true; lastDeleted = null; }, 7000);
+  }
+  $('toast-undo').addEventListener('click', function () {
+    if (!lastDeleted) return;
+    state.debts.splice(Math.min(lastDeleted.index, state.debts.length), 0, lastDeleted.debt);
+    lastDeleted = null;
+    $('toast').hidden = true;
+    save();
+    renderAll();
+  });
+
+  $('clear-ex').addEventListener('click', function () {
+    state.debts = state.debts.filter(function (d) { return !d.ex; });
+    if (editing && !state.debts.some(function (d) { return d.id === editing; })) resetForm();
+    save();
+    renderAll();
+  });
+
+  /* ---------- view controls ---------- */
+  $('v-start').addEventListener('change', function (e) {
+    if (e.target.value) { state.view = e.target.value; save(); renderAll(); }
+  });
+  $('seg').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-h]');
+    if (!b) return;
+    state.H = +b.getAttribute('data-h');
+    save();
+    renderAll();
+  });
+
+  resetForm();
+  renderAll();
+})();
+</script>
+
+</body></html>
